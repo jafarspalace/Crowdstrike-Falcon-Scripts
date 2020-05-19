@@ -5,3 +5,5 @@ Windows Powershell scripts to be run with Crowdstrike Falcon Real-Time Response.
 Some scripts look up the logged in user via explorer.exe process (where necessary), since Falcon runs under "SystemProfile". 
 
 Some scripts also mount a Volume Shadow Copy of the local disk to copy from, to get around locked file issues when pulling certain files like Registry, Web History, etc.
+
+These scripts are broken out, but can be compiled to run in one go if preferred.
