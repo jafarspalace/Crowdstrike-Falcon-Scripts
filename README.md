@@ -1,4 +1,4 @@
-# Crowdstrike-Falcon-Scripts
+# Crowdstrike Falcon Live Response Scripts
 
 Windows Powershell scripts to be run with Crowdstrike Falcon Real-Time Response. These scripts are intended to bring back only raw data, and not to parse any data locally on the host. This is intentional. The data can be parsed on a forensics system with whatever tools preferred.
 
