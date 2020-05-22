@@ -94,10 +94,7 @@ function Export-MFT {
 <#
 
 Extracts MFT and saves to C:\Collections\mftout.bin 
-To run: 
-```
-runscript -CloudFile="ExtractMFT" -CommandLine="ExtractMFT ; Export-MFT"
-```
+
 .SYNOPSIS
 Extracts master file table from volume.
 
