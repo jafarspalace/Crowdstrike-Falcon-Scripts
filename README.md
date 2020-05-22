@@ -13,6 +13,10 @@ Credit to Jesse Davis (@secabstraction) for the creation of Export-MFT for expor
 To run FullTriage.ps1 on Falcon:
 runscript -CloudFile="RunTriage" -CommandLine="RunTriage ; Triage-Nomft ; Export-MFT"
 
+FullTriage.ps1 will also compress everything into C:\Collections\FullCollection.zip and remove all other files.
+
 All other scripts you can run without passing any arguments.
+
+You will then need to pull these files back manually as usual.
 
 Use at your own risk. I'm not responsible for any mishaps that occur.
