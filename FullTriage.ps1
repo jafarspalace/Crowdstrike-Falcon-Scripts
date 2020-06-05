@@ -29,37 +29,30 @@ $userextract = $User.Substring($pos+1)
 echo "$userextract is the currently logged in user"
 
 <# Collect the things. Edit as you like. This is collecting Firfox, Chromem, and IE #>
-$path1 = Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Microsoft\Windows\Webcache\*\WebCacheV01.dat" -Force -Recurse -EA SilentlyContinue
-$path2 = Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\Default\*\History" -Recurse -EA SilentlyContinue
-$path3 = Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\Default\*\History-journal" -Recurse -EA SilentlyContinue
-$path4 = Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite" -Recurse -EA SilentlyContinue
-$path5 = Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-shm" -Recurse -EA SilentlyContinue
-$path6 = Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-wal" -Recurse -EA SilentlyContinue
+echo "Copying Webhistory"
+$webdestination = "$Env:systemdrive\Collections\WebHistory"
 
-echo "Collected Webhistory"
-Copy-Item "$path1" -Destination "$Env:systemdrive\Collections\WebHistory"
-Copy-Item "$path2" -Destination "$Env:systemdrive\Collections\WebHistory"
-Copy-Item "$path3" -Destination "$Env:systemdrive\Collections\WebHistory"
-Copy-Item "$path4" -Destination "$Env:systemdrive\Collections\WebHistory"
-Copy-Item "$path5" -Destination "$Env:systemdrive\Collections\WebHistory"
-Copy-Item "$path6" -Destination "$Env:systemdrive\Collections\WebHistory"
+<# Collect the things. Edit as you like. This is collecting Firfox, Chromem, and IE #>
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Microsoft\Windows\Webcache\*\WebCacheV01.dat" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\Default\*\History"-Force  -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\Default\*\History-journal" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-shm" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-wal" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
+
 
 <# Collect the things. edit as you like. This is collecting Jumplist, Registry, AmCache, etc#>
-$path7 = "$temp_shadow_link\Windows\System32\config"
-$path8 = "$temp_shadow_link\Users\$userextract\AppData\Local\Microsoft\Windows"
-$path9 = "$temp_shadow_link\Windows\appcompat\Programs"
-$path10 = "$temp_shadow_link\Users\$userextract"
-$Path11 = "$temp_shadow_link\Users\$userextract\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations"
-$Path12 = "$temp_shadow_link\Users\$userextract\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations"
+echo "Copying Registry Hives, Useraccess, and JumpList"
+$destination = "$Env:systemdrive\Collections\RegistryandRecentAccess"
 
-echo "Collected Registry Things"
-Copy-Item -Path "$path7\SYSTEM" -Destination "$Env:systemdrive\Collections\RegistryandRecentAccess"
-Copy-Item -Path "$path7\SOFTWARE" -Destination "$Env:systemdrive\Collections\RegistryandRecentAccess"
-Copy-Item -Path "$path10\NTUSER.DAT" -Destination "$Env:systemdrive\Collections\RegistryandRecentAccess"
-Copy-Item -Path "$path8\UsrClass.dat" -Destination "$Env:systemdrive\Collections\RegistryandRecentAccess"
-Copy-Item -Path "$path9\Amcache.hve" -Destination "$Env:systemdrive\Collections\RegistryandRecentAccess"
-Copy-Item -Path "$path11" -Destination "$Env:systemdrive\Collections\RegistryandRecentAccess\JumpList" -Recurse
-Copy-Item -Path "$path12" -Destination "$Env:systemdrive\Collections\RegistryandRecentAccess\JumpList" -Recurse
+<# Collect the things. edit as you like. This is collecting Jumplist, Registry, AmCache, etc#>
+Get-ChildItem -Path "$temp_shadow_link\Windows\System32\config\SYSTEM" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
+Get-ChildItem -Path "$temp_shadow_link\Windows\System32\config\SOFTWARE" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Microsoft\Windows\UsrClass.dat" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
+Get-ChildItem -Path "$temp_shadow_link\Windows\appcompat\Programs\Amcache.hve" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\NTUSER.DAT" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination "$destination\JumpList"}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations" -Force -Recurse -EA SilentlyContinue  | foreach {Copy-Item -Path $_.FullName -Destination "$destination\JumpList"}
 
 <# Clean up and remove the VSS link #>
 echo "DELETING SNAPSHOT AND THE LINK TO IT (#CLEANUP), LOOKS LIKE Registry and WebHistory Finished Fine"
@@ -94,7 +87,10 @@ function Export-MFT {
 <#
 
 Extracts MFT and saves to C:\Collections\mftout.bin 
-
+To run: 
+```
+runscript -CloudFile="ExtractMFT" -CommandLine="ExtractMFT ; Export-MFT"
+```
 .SYNOPSIS
 Extracts master file table from volume.
 
@@ -338,13 +334,4 @@ PS C:\> Export-MFT -ComputerName Server01 -Volume F
     [GC]::Collect()
     $ScriptTime.Stop()
     Write-Verbose "Done, execution time: $($ScriptTime.Elapsed)"
-
-    <# Compress all the things #>
-    echo "Adding MFT to Full Collection Archive"
-    Get-ChildItem -Path $Env:SystemDrive\Collections\MFTOUT.bin | Compress-Archive -Update -DestinationPath $Env:SystemDrive\Collections\FullCollection.zip
-    
-    <# Clean up MFT #>
-    echo "Cleaning up"
-    Get-ChildItem -Path $Env:SystemDrive\Collections -Exclude FullCollection.zip | foreach { Remove-Item -Path $_.FullName -Recurse -Force}
-    echo "All done now"
 }
