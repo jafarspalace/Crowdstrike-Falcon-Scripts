@@ -81,6 +81,7 @@ Get-ChildItem -Path $Env:SystemDrive\Collections | Compress-Archive -Destination
 echo "Cleaning up"
 Get-ChildItem -Path $Env:SystemDrive\Collections -Exclude FullCollection.zip | foreach { Remove-Item -Path $_.FullName -Recurse -Force}
 echo "All done now"
+}
 
 function Export-MFT {
 <#
@@ -342,3 +343,4 @@ PS C:\> Export-MFT -ComputerName Server01 -Volume F
     echo "Cleaning up"
     Get-ChildItem -Path $Env:SystemDrive\Collections -Exclude FullCollection.zip | foreach { Remove-Item -Path $_.FullName -Recurse -Force}
     echo "All done now"
+    }
