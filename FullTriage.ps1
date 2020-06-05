@@ -334,4 +334,13 @@ PS C:\> Export-MFT -ComputerName Server01 -Volume F
     [GC]::Collect()
     $ScriptTime.Stop()
     Write-Verbose "Done, execution time: $($ScriptTime.Elapsed)"
+    
+    <# Compress all the things #>
+    echo "Adding MFT to Full Collection Archive"
+    Get-ChildItem -Path $Env:SystemDrive\Collections\MFTOUT.bin | Compress-Archive -Update -DestinationPath $Env:SystemDrive\Collections\FullCollection.zip
+
+    <# Clean up MFT #>
+    echo "Cleaning up"
+    Get-ChildItem -Path $Env:SystemDrive\Collections -Exclude FullCollection.zip | foreach { Remove-Item -Path $_.FullName -Recurse -Force}
+    echo "All done now"
 }
