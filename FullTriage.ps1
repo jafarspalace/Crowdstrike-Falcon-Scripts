@@ -28,31 +28,31 @@ $leftPart = $User.Substring(0, $pos)
 $userextract = $User.Substring($pos+1)
 echo "$userextract is the currently logged in user"
 
-<# Collect the things. Edit as you like. This is collecting Firfox, Chromem, and IE #>
+<# Collect the things. Edit as you like. This is collecting Firfox, Chrome, and IE #>
 echo "Copying Webhistory"
 $webdestination = "$Env:systemdrive\Collections\WebHistory"
 
 <# Collect the things. Edit as you like. This is collecting Firfox, Chromem, and IE #>
 Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Microsoft\Windows\Webcache\*\WebCacheV01.dat" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
-Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\Default\*\History"-Force  -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
-Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\Default\*\History-journal" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\*\History"-Force  -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\*\History-journal" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
 Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webestination}
-Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-shm" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-shm" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Force -Destination $webdestination}
 Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-wal" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
 
 
 <# Collect the things. edit as you like. This is collecting Jumplist, Registry, AmCache, etc#>
 echo "Copying Registry Hives, Useraccess, and JumpList"
-$destination = "$Env:systemdrive\Collections\RegistryandRecentAccess"
+$regdestination = "$Env:systemdrive\Collections\RegistryandRecentAccess"
 
 <# Collect the things. edit as you like. This is collecting Jumplist, Registry, AmCache, etc#>
-Get-ChildItem -Path "$temp_shadow_link\Windows\System32\config\SYSTEM" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
-Get-ChildItem -Path "$temp_shadow_link\Windows\System32\config\SOFTWARE" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
-Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Microsoft\Windows\UsrClass.dat" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
-Get-ChildItem -Path "$temp_shadow_link\Windows\appcompat\Programs\Amcache.hve" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
-Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\NTUSER.DAT" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $destination}
-Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination "$destination\JumpList"}
-Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations" -Force -Recurse -EA SilentlyContinue  | foreach {Copy-Item -Path $_.FullName -Destination "$destination\JumpList"}
+Get-ChildItem -Path "$temp_shadow_link\Windows\System32\config\SYSTEM" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $regdestination}
+Get-ChildItem -Path "$temp_shadow_link\Windows\System32\config\SOFTWARE" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $regdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Microsoft\Windows\UsrClass.dat" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $regdestination}
+Get-ChildItem -Path "$temp_shadow_link\Windows\appcompat\Programs\Amcache.hve" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $regdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\NTUSER.DAT" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $regdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination "$regdestination\JumpList"}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations" -Force -Recurse -EA SilentlyContinue  | foreach {Copy-Item -Path $_.FullName -Destination "$regdestination\JumpList"}
 
 <# Clean up and remove the VSS link #>
 echo "DELETING SNAPSHOT AND THE LINK TO IT (#CLEANUP), LOOKS LIKE Registry and WebHistory Finished Fine"
@@ -68,15 +68,22 @@ $newname = $name.Replace("/","-")
 wevtutil.exe EPL $name  $Env:SystemDrive\Collections\EventLogs\$newname.evtx
 }
 
+
 <# Compress Event Logs #>
 Get-ChildItem -Path $Env:SystemDrive\Collections\EventLogs | Compress-Archive -DestinationPath $Env:SystemDrive\Collections\EventLogs\Archived_WinLogs
+
+<# Change all file properties to Archive. Powershell compress has bug that won't compress hidden files#>
+$FolderPath = "$Env:SystemDrive\Collections\"
+Get-ChildItem -Path $FolderPath -Force -Recurse | foreach {
+    Set-ItemProperty -Path $_.FullName -Name Attributes -Value Archive
+}
 
 echo "Removing Temp Event Logs"
 <# Remove Event Logs to save space and cleanup #>
 Get-ChildItem -Path $Env:SystemDrive\Collections\EventLogs *.evtx | foreach { Remove-Item -Path $_.FullName }
 
 <# Compress all the things #>
-Get-ChildItem -Path $Env:SystemDrive\Collections | Compress-Archive -DestinationPath $Env:SystemDrive\Collections\FullCollection.zip
+Get-ChildItem -Path $Env:SystemDrive\Collections | Compress-Archive -DestinationPath $Env:SystemDrive\Collections\FullCollection.zip -Update
 
 echo "Cleaning up"
 Get-ChildItem -Path $Env:SystemDrive\Collections -Exclude FullCollection.zip | foreach { Remove-Item -Path $_.FullName -Recurse -Force}
@@ -334,13 +341,8 @@ PS C:\> Export-MFT -ComputerName Server01 -Volume F
     [GC]::Collect()
     $ScriptTime.Stop()
     Write-Verbose "Done, execution time: $($ScriptTime.Elapsed)"
-    
-    <# Compress all the things #>
-    echo "Adding MFT to Full Collection Archive"
-    Get-ChildItem -Path $Env:SystemDrive\Collections\MFTOUT.bin | Compress-Archive -Update -DestinationPath $Env:SystemDrive\Collections\FullCollection.zip
 
-    <# Clean up MFT #>
-    echo "Cleaning up"
-    Get-ChildItem -Path $Env:SystemDrive\Collections -Exclude FullCollection.zip | foreach { Remove-Item -Path $_.FullName -Recurse -Force}
-    echo "All done now"
-    }
+    <# Compress Event Logs #>
+Get-ChildItem -Path $Env:SystemDrive\Collections\EventLogs | Compress-Archive -DestinationPath $Env:SystemDrive\Collections\EventLogs\Archived_WinLogs
+n
+}
