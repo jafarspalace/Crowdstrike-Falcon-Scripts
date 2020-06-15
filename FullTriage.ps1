@@ -37,7 +37,7 @@ Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Microsof
 Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\*\History"-Force  -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
 Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Local\Google\Chrome\User Data\*\History-journal" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
 Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webestination}
-Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-shm" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Force -Destination $webdestination}
+Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-shm" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
 Get-ChildItem -Path "$temp_shadow_link\Users\$userextract\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite-wal" -Force -Recurse -EA SilentlyContinue | foreach {Copy-Item -Path $_.FullName -Destination $webdestination}
 
 
