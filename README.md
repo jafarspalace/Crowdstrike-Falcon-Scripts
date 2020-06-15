@@ -14,11 +14,13 @@ Credit to Jesse Davis (@secabstraction) for the creation of Export-MFT for expor
 ```
 runscript -CloudFile="RunTriage" -CommandLine="RunTriage ; Triage-Nomft ; Export-MFT"
 ```
+To run only one fuction at a time, Just pass only one of the functions. You would do this if you did not want to export the MFT for example.
+
 
 FullTriage.ps1 will also compress everything into ```C:\Collections\FullCollection.zip``` and remove all other files.
-
-All other scripts you can run without passing any arguments.
 
 You will then need to pull these files back manually as usual.
 
 Use at your own risk. I'm not responsible for any mishaps that occur.
+
+Future Consideration will be to maybe create additional functions to make this run more modular, but doesn't really seem necessary at the moment.
