@@ -1,10 +1,10 @@
 ## Crowdstrike Falcon Live Response Scripts
 
-A series of Windows Powershell scripts to be run with Crowdstrike Falcon Real-Time Response. These scripts are intended to bring back only raw data, and not to parse any data locally on the host. This is intentional. The data can be pulled back and parsed on a forensics system with whatever tools preferred.
+ Windows Powershell script to be run with Crowdstrike Falcon Real-Time Response. Script is intended to bring back only raw data, and not to parse any data locally on the host. This is intentional. The data can be pulled back and parsed on a forensics system with whatever tools preferred.
 
-Some scripts look up the logged in user via explorer.exe process (where necessary), since Falcon runs under "SystemProfile". 
+Script looks up the logged in user via explorer.exe process (where necessary), since Falcon runs under "SystemProfile". 
 
-Scripts leverage mounting a Volume Shadow Copy of the local harddisk to get around locked file issues associated to system files such as the registry.
+Script leverages mounting a Volume Shadow Copy of the local harddisk to get around locked file issues associated to system files such as the registry.
 
 This is still a work in progress and there are numerous other forensic artifacts that can be collected. Feel free to add.
 
