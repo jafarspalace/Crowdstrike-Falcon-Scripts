@@ -1,3 +1,7 @@
+<# Author : Ryan Jafarkhani
+I ask that you share and that you also give back to the community
+#>
+
 function Triage-Nomft{
 
 <# Create Collections Directory if not exist - Change this to what you want #>
