@@ -47,8 +47,8 @@ sudo chmod 777 /Users/$var/.FalconCollect/Collection/.fseventsd_system_volume_da
 #additional for insider related - neeed to add more!
 zip -q -1 -r /Users/$var/.FalconCollect/Collection/cloudquicklookdb.zip /Users/$var/Library/Application\ Support/Quick\ Look/cloudthumbnails.db /Users/$var/Library/Application\ Support/Quick\ Look/cloudthumbnails.db-wal /Users/$var/Library/Application\ Support/Quick\ Look/cloudthumbnails.db-shm
 zip -q -1 -r /Users/$var/.FalconCollect/Collection/zoomdb.zip /Users/$var/Library/Application\ Support/zoom.us/
-sudo cp /Users/rjafarkhani/Library/Preferences/MobileMeAccounts.plist /Users/$var/.FalconCollect/Collection/MobileMeAccounts.plist
-sudo cp -r /Users/rjafarkhani/Library/Messages/ /Users/$var/.FalconCollect/Collection/Chat
+sudo cp /Users/$var/Library/Preferences/MobileMeAccounts.plist /Users/$var/.FalconCollect/Collection/MobileMeAccounts.plist
+sudo cp -r /Users/$var/Library/Messages/ /Users/$var/.FalconCollect/Collection/Chat
 sudo chmod 777 /Users/$var/.FalconCollect/Collection/Chat
 
 #gather everything together and best compression - can see if the time trade off is really worth it
